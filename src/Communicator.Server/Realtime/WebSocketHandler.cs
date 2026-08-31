@@ -23,7 +23,7 @@ public static class WebSocketHandler
 
     private static async Task ReceiveMessagesAsync(WebSocket webSocket)
     {
-        var buffer = new ArraySegment<byte>(new byte[4096]);
+        var buffer = new byte[4096];
 
         while (webSocket.State == WebSocketState.Open)
         {
@@ -34,12 +34,11 @@ public static class WebSocketHandler
             {
                 result = await webSocket.ReceiveAsync(
                     buffer,
-                    CancellationToken.None
-                );
-                
+                    CancellationToken.None);
+
                 ms.Write(
-                    buffer.Array!,
-                    buffer.Offset,
+                    buffer,
+                    0,
                     result.Count);
                 
             } while (!result.EndOfMessage);
@@ -81,7 +80,7 @@ public static class WebSocketHandler
         var data = Encoding.UTF8.GetBytes(message);
 
         await webSocket.SendAsync(
-            new ArraySegment<byte>(data),
+            data,
             WebSocketMessageType.Text,
             true,
             CancellationToken.None);
