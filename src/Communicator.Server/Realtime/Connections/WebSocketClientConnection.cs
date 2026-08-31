@@ -1,17 +1,26 @@
 ﻿using System.Net.WebSockets;
 using System.Text;
+using Communicator.Server.Realtime.Messaging;
 
 namespace Communicator.Server.Realtime.Connections;
 
 public sealed class WebSocketClientConnection(
-    Guid id,
-    WebSocket webSocket) : IClientConnection
+    WebSocket webSocket, WebSocketMessageReader messageReader)
+    : IClientConnection, IDisposable
 {
-    public Guid Id { get; } = id;
+    public Guid Id { get; } = Guid.NewGuid();
 
     public bool IsOpen => 
         webSocket.State == WebSocketState.Open;
 
+    public async Task<MessageReadResult?> ReceiveAsync(
+        CancellationToken cancellationToken = default)
+    {
+        return await messageReader.ReadAsync(
+            webSocket,
+            cancellationToken);
+    }
+    
     public async Task SendAsync(
         string message, 
         CancellationToken cancellationToken = default)
@@ -40,5 +49,10 @@ public sealed class WebSocketClientConnection(
             status,
             description,
             cancellationToken);
+    }
+
+    public void Dispose()
+    {
+        webSocket.Dispose();
     }
 }
