@@ -6,4 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Api\" />
+    <Folder Include="Application\Abstractions\" />
+    <Folder Include="Application\DTOs\" />
+    <Folder Include="Application\Services\" />
+    <Folder Include="Domain\Messages\" />
+    <Folder Include="Realtime\Events\" />
+    <Folder Include="Realtime\Protocol\" />
+  </ItemGroup>
+
 </Project>
