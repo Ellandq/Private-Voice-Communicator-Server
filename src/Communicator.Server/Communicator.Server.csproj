@@ -13,7 +13,8 @@
     <Folder Include="Application\Services\" />
     <Folder Include="Domain\Messages\" />
     <Folder Include="Realtime\Events\" />
-    <Folder Include="Realtime\Protocol\" />
+    <Folder Include="Realtime\Protocol\Events\" />
+    <Folder Include="Realtime\Protocol\Responses\" />
   </ItemGroup>
 
 </Project>
