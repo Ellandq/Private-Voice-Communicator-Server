@@ -1,0 +1,7 @@
+﻿services:
+  communicator.server:
+    image: communicator.server
+    build:
+      context: .
+      dockerfile: src/Communicator.Server/Dockerfile
+
