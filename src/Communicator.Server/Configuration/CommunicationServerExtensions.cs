@@ -20,11 +20,11 @@ public static class CommunicatorServerExtensions
         services.AddSingleton<MessageDispatcher>();
         services.AddSingleton<IMessageReceiver, MessageReceiver>();
 
-// ------------ TRANSIENT ---------------------------------
+        // ------------ TRANSIENT ---------------------------------
         services.AddTransient<WebSocketHandler>();
         services.AddTransient<WebSocketEndpoint>();
 
-// ------------ TRANSIENT - MESSAGE HANDLERS --------------
+        // ------------ TRANSIENT - MESSAGE HANDLERS --------------
         services.AddTransient<IRealtimeMessageHandler, SendMessageHandler>();
 
         return services;

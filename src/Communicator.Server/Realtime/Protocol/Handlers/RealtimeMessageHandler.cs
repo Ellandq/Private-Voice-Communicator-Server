@@ -7,6 +7,11 @@ public abstract class RealtimeMessageHandler<TPayload>
 {
     public abstract string MessageType { get; }
     
+    private readonly JsonSerializerOptions _jsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true
+    };
+    
     public async Task HandleAsync(
         RealtimeMessage message, 
         CancellationToken cancellationToken = default)
@@ -18,7 +23,7 @@ public abstract class RealtimeMessageHandler<TPayload>
         }
 
         var payload = message.Payload.Value
-            .Deserialize<TPayload>();
+            .Deserialize<TPayload>(_jsonOptions);
 
         if (payload is null)
         {

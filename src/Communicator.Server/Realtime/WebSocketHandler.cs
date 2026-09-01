@@ -43,14 +43,20 @@ public sealed class WebSocketHandler(
             var result = await connection.ReceiveAsync(
                 cancellationToken);
 
-            if (result is null)
+            if (result is { IsClose: true })
             {
+                await connection.CloseAsync(
+                    result.CloseStatus ?? WebSocketCloseStatus.NormalClosure,
+                    result.CloseDescription,
+                    cancellationToken);
+
                 return;
             }
 
-            await messageDispatcher.DispatchAsync(
-                result,
-                cancellationToken);
+            if (result != null)
+                await messageDispatcher.DispatchAsync(
+                    result,
+                    cancellationToken);
         }
     }
 
