@@ -4,6 +4,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +14,14 @@
     <Folder Include="Application\Services\" />
     <Folder Include="Domain\Messages\" />
     <Folder Include="Realtime\Events\" />
-    <Folder Include="Realtime\Protocol\" />
+    <Folder Include="Realtime\Protocol\Events\" />
+    <Folder Include="Realtime\Protocol\Responses\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\.dockerignore">
+      <Link>.dockerignore</Link>
+    </Content>
   </ItemGroup>
 
 </Project>

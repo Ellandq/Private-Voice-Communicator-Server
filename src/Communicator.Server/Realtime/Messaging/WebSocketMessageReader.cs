@@ -6,7 +6,7 @@ public sealed class WebSocketMessageReader
 {
     private const int BufferSize = 4096;
 
-    public async Task<MessageReadResult?> ReadAsync(
+    public async Task<MessageReadResult> ReadAsync(
         WebSocket webSocket,
         CancellationToken cancellationToken = default)
     {
@@ -24,7 +24,11 @@ public sealed class WebSocketMessageReader
 
             if (result.MessageType == WebSocketMessageType.Close)
             {
-                return null;
+                return new MessageReadResult(
+                    WebSocketMessageType.Close,
+                    [],
+                    result.CloseStatus,
+                    result.CloseStatusDescription);
             }
 
             messageStream.Write(

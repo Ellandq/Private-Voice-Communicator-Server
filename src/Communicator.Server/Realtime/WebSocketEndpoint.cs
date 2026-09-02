@@ -13,7 +13,7 @@ public sealed class WebSocketEndpoint(
             return;
         }
 
-        using var webSocket =
+        var webSocket =
             await context.WebSockets.AcceptWebSocketAsync();
 
         await handler.HandleAsync(

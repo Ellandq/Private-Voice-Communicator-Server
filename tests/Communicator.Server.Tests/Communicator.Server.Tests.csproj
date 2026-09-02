@@ -24,4 +24,8 @@
     <ProjectReference Include="..\..\src\Communicator.Server\Communicator.Server.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Unit\" />
+  </ItemGroup>
+
 </Project>

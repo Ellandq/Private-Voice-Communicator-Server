@@ -1,12 +1,14 @@
 ﻿using System.Net.WebSockets;
 using Communicator.Server.Realtime.Connections;
 using Communicator.Server.Realtime.Messaging;
+using Communicator.Server.Realtime.Protocol;
 
 namespace Communicator.Server.Realtime;
 
 public sealed class WebSocketHandler(
     ConnectionManager connectionManager,
-    WebSocketMessageReader webSocketMessageReader)
+    WebSocketMessageReader webSocketMessageReader,
+    MessageDispatcher messageDispatcher)
 {
     public async Task HandleAsync(
         WebSocket webSocket,
@@ -41,17 +43,20 @@ public sealed class WebSocketHandler(
             var result = await connection.ReceiveAsync(
                 cancellationToken);
 
-            if (result is null)
+            if (result is { IsClose: true })
             {
                 await connection.CloseAsync(
-                    WebSocketCloseStatus.NormalClosure,
-                    "Connection closed by client.",
+                    result.CloseStatus ?? WebSocketCloseStatus.NormalClosure,
+                    result.CloseDescription,
                     cancellationToken);
-                
+
                 return;
             }
-            
-            // TODO
+
+            if (result != null)
+                await messageDispatcher.DispatchAsync(
+                    result,
+                    cancellationToken);
         }
     }
 
