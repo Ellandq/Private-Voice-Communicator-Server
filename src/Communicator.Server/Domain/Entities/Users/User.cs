@@ -1,6 +1,8 @@
-﻿using Communicator.Server.Domain.Enums;
+﻿using Communicator.Server.Domain.Entities.GroupChats;
+using Communicator.Server.Domain.Entities.Messages;
+using Communicator.Server.Domain.Enums;
 
-namespace Communicator.Server.Domain.Entities;
+namespace Communicator.Server.Domain.Entities.Users;
 
 public class User
 {
@@ -27,8 +29,8 @@ public class User
     public ICollection<DmMessage> ReceivedDirectMessages { get; private set; }
         = new List<DmMessage>();
 
-    public ICollection<Media> OwnedMedia { get; private set; }
-        = new List<Media>();
+    public ICollection<Media.Media> OwnedMedia { get; private set; }
+        = new List<Media.Media>();
 
     private User() { }
 

@@ -1,4 +1,7 @@
-﻿namespace Communicator.Server.Domain.Entities;
+﻿using Communicator.Server.Domain.Entities.GroupChats;
+using Communicator.Server.Domain.Entities.Users;
+
+namespace Communicator.Server.Domain.Entities.Messages;
 
 public class Message
 {

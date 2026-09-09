@@ -1,4 +1,4 @@
-﻿namespace Communicator.Server.Domain.Entities;
+﻿namespace Communicator.Server.Domain.Entities.GroupChats;
 
 public class GroupChat
 {

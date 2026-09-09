@@ -1,33 +1,53 @@
 ﻿using Communicator.Server.Application.Messaging;
+using Communicator.Server.Infrastructure.Persistence;
 using Communicator.Server.Realtime;
 using Communicator.Server.Realtime.Connections;
 using Communicator.Server.Realtime.Messaging;
 using Communicator.Server.Realtime.Protocol;
 using Communicator.Server.Realtime.Protocol.Handlers;
 using Communicator.Server.Realtime.Protocol.Handlers.Implementations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Communicator.Server.Configuration;
 
 public static class CommunicatorServerExtensions
 {
-    public static IServiceCollection AddCommunicatorServer(
-        this IServiceCollection services)
+    extension(IServiceCollection services)
     {
-        // ------------ SINGLETONS --------------------------------
-        services.AddSingleton<ConnectionManager>();
-        services.AddSingleton<WebSocketMessageReader>();
-        services.AddSingleton<MessageDeserializer>();
-        services.AddSingleton<MessageDispatcher>();
-        services.AddSingleton<IMessageReceiver, MessageReceiver>();
+        public IServiceCollection AddCommunicatorServer(IConfiguration configuration)
+        {
+            // ------------ DATABASE ----------------------------------
+            services.AddDatabase(configuration);
+        
+            // ------------ SINGLETONS --------------------------------
+            services.AddSingleton<ConnectionManager>();
+            services.AddSingleton<WebSocketMessageReader>();
+            services.AddSingleton<MessageDeserializer>();
+            services.AddSingleton<MessageDispatcher>();
+            services.AddSingleton<IMessageReceiver, MessageReceiver>();
 
-        // ------------ TRANSIENT ---------------------------------
-        services.AddTransient<WebSocketHandler>();
-        services.AddTransient<WebSocketEndpoint>();
+            // ------------ TRANSIENT ---------------------------------
+            services.AddTransient<WebSocketHandler>();
+            services.AddTransient<WebSocketEndpoint>();
 
-        // ------------ TRANSIENT - MESSAGE HANDLERS --------------
-        services.AddTransient<IRealtimeMessageHandler, SendMessageHandler>();
+            // ------------ TRANSIENT - MESSAGE HANDLERS --------------
+            services.AddTransient<IRealtimeMessageHandler, SendMessageHandler>();
+        
+            return services;
+        }
 
-        return services;
+        private IServiceCollection AddDatabase(IConfiguration configuration)
+        {
+            var connectionString =
+                configuration.GetConnectionString("Database")
+                ?? throw new InvalidOperationException(
+                    "Database connection string is missing.");
+
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlite(connectionString));
+
+            return services;
+        }
     }
 
     public static WebApplication UseCommunicatorServer(

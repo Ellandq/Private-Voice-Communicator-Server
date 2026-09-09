@@ -1,4 +1,6 @@
-﻿namespace Communicator.Server.Domain.Entities;
+﻿using Communicator.Server.Domain.Entities.Users;
+
+namespace Communicator.Server.Domain.Entities.GroupChats;
 
 public class GcVoiceCallParticipant
 {

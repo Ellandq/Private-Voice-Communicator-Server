@@ -1,9 +1,8 @@
-using Communicator.Server;
 using Communicator.Server.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCommunicatorServer();
+builder.Services.AddCommunicatorServer(builder.Configuration);
 
 var app = builder.Build();
 
@@ -11,4 +10,7 @@ app.UseCommunicatorServer();
 
 app.Run();
 
-public partial class Program;
+namespace Communicator.Server
+{
+    public partial class Program;
+}

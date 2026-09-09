@@ -1,4 +1,4 @@
-﻿namespace Communicator.Server.Domain.Entities;
+﻿namespace Communicator.Server.Domain.Entities.Messages;
 
 public class MessageAttachment
 {
@@ -6,7 +6,7 @@ public class MessageAttachment
     public Guid MediaId { get; private set; }
 
     public Message Message { get; private set; } = null!;
-    public Media Media { get; private set; } = null!;
+    public Media.Media Media { get; private set; } = null!;
 
     private MessageAttachment() { }
 

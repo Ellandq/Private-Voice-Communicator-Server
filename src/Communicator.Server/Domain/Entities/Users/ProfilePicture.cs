@@ -1,4 +1,4 @@
-﻿namespace Communicator.Server.Domain.Entities;
+﻿namespace Communicator.Server.Domain.Entities.Users;
 
 public class ProfilePicture
 {
@@ -6,7 +6,7 @@ public class ProfilePicture
     public Guid MediaId { get; private set; }
 
     public User User { get; private set; } = null!;
-    public Media Media { get; private set; } = null!;
+    public Media.Media Media { get; private set; } = null!;
 
     private ProfilePicture() { }
 
