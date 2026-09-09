@@ -12,7 +12,7 @@
     <Folder Include="Application\Abstractions\" />
     <Folder Include="Application\DTOs\" />
     <Folder Include="Application\Services\" />
-    <Folder Include="Domain\Messages\" />
+    <Folder Include="data\" />
     <Folder Include="Realtime\Events\" />
     <Folder Include="Realtime\Protocol\Events\" />
     <Folder Include="Realtime\Protocol\Responses\" />
@@ -22,6 +22,14 @@
     <Content Include="..\..\.dockerignore">
       <Link>.dockerignore</Link>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.12">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.12" />
   </ItemGroup>
 
 </Project>
